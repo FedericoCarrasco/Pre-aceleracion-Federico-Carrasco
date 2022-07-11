@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "actor") // character es una palabra reservada por SQL :(
+@Table(name = "characters")
 @Getter
 @Setter
 public class CharacterEntity {
