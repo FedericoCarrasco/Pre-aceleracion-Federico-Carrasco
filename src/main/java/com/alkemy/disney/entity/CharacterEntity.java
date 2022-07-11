@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "actor") // Por alguna razón si nombro a esta tabla "character" hibernate no la crea en mysql.
+@Table(name = "actor") // character es una palabra reservada por SQL :(
 @Getter
 @Setter
 public class CharacterEntity {
