@@ -27,7 +27,7 @@ public class CharacterEntity {
 
     private String story;
 
-    @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "characters")
     private Set<MovieEntity> movies = new HashSet<>();
 
 }
