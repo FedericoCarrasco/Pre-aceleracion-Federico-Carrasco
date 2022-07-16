@@ -23,4 +23,9 @@ public class CharacterServiceImpl implements CharacterService {
         CharacterEntity entitySaved = characterRepository.save(entity);
         return characterMapper.characterEntity2DTO(entitySaved);
     }
+
+    public void delete(long id) {
+        characterRepository.deleteById(id);
+    }
+
 }

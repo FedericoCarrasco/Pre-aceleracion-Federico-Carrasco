@@ -23,6 +23,7 @@ public class CharacterMapper {
 
     public CharacterDTO characterEntity2DTO (CharacterEntity entity) {
         CharacterDTO characterDTO = new CharacterDTO();
+        characterDTO.setId(entity.getId());
         characterDTO.setName(entity.getName());
         characterDTO.setImage(entity.getImage());
         characterDTO.setAge(entity.getAge());

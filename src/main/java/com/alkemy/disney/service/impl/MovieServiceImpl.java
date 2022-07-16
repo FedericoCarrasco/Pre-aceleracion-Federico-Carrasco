@@ -22,4 +22,9 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity entitySaved = movieRepository.save(entity);
         return movieMapper.movieEntity2DTO(entitySaved);
     }
+
+    public void delete(long id) {
+        movieRepository.deleteById(id);
+    }
+
 }

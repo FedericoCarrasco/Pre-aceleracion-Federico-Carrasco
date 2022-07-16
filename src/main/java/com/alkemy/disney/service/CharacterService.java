@@ -6,4 +6,6 @@ public interface CharacterService {
 
     public CharacterDTO save(CharacterDTO character);
 
+    public void delete(long id);
+
 }
