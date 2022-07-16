@@ -24,7 +24,7 @@ public class MovieEntity {
     private String image;
 
     @Column(name = "release_date")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
 
     private int rating;
