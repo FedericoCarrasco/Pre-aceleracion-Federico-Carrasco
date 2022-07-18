@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -16,6 +17,12 @@ public class CharacterController {
 
     @Autowired
     private CharacterService service;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CharacterDTO> getById(@PathVariable Long id) {
+        CharacterDTO character = service.getById(id);
+        return ResponseEntity.ok(character);
+    }
 
     @GetMapping
     public ResponseEntity<List<CharacterDTO>> getDetailsByFilters(
@@ -31,6 +38,12 @@ public class CharacterController {
     @PostMapping
     public ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {
         CharacterDTO savedCharacter = service.save(character);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCharacter);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CharacterDTO> update(@RequestBody CharacterDTO newCharacter, @PathVariable Long id) {
+        CharacterDTO savedCharacter = service.update(newCharacter, id);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCharacter);
     }
 
