@@ -2,10 +2,14 @@ package com.alkemy.disney.service;
 
 import com.alkemy.disney.dto.MovieDTO;
 
+import java.util.List;
+
 public interface MovieService {
 
-    public MovieDTO save(MovieDTO movie);
+    MovieDTO save(MovieDTO movie);
 
-    public void delete(long id);
+    List<MovieDTO> getByFilters(String name, Long genre, String order);
+
+    void delete(long id);
 
 }

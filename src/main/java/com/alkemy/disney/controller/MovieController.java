@@ -7,12 +7,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("movies")
 public class MovieController {
 
     @Autowired
     private MovieService service;
+
+    @GetMapping
+    public ResponseEntity<List<MovieDTO>> getDetailByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long genre,
+            @RequestParam(required = false, defaultValue = "ASC") String order
+    ) {
+        List<MovieDTO> movies = service.getByFilters(name, genre, order);
+        return ResponseEntity.ok(movies);
+    }
 
     @PostMapping
     ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie) {
