@@ -1,5 +1,6 @@
 package com.alkemy.disney.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Setter
 @SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class CharacterEntity {
 
     @Id

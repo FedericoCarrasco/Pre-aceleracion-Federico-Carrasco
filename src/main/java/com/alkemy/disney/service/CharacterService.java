@@ -2,10 +2,15 @@ package com.alkemy.disney.service;
 
 import com.alkemy.disney.dto.CharacterDTO;
 
+import java.util.List;
+import java.util.Set;
+
 public interface CharacterService {
 
-    public CharacterDTO save(CharacterDTO character);
+    CharacterDTO save(CharacterDTO character);
 
-    public void delete(long id);
+    List<CharacterDTO> getByFilters(String name, Integer age, Double weight, Set<Long> movies);
+
+    void delete(long id);
 
 }

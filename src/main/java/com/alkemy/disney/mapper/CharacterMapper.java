@@ -1,42 +1,60 @@
 package com.alkemy.disney.mapper;
 
 import com.alkemy.disney.dto.CharacterDTO;
+import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.entity.CharacterEntity;
+import com.alkemy.disney.entity.MovieEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class CharacterMapper {
 
+    @Autowired
+    private MovieMapper movieMapper;
+
     public CharacterEntity characterDTO2Entity (CharacterDTO dto) {
-        CharacterEntity characterEntity = new CharacterEntity();
-        characterEntity.setName(dto.getName());
-        characterEntity.setImage(dto.getImage());
-        characterEntity.setAge(dto.getAge());
-        characterEntity.setWeight(dto.getWeight());
-        characterEntity.setStory(dto.getStory());
-        characterEntity.setMovies(dto.getMovies());
-        return characterEntity;
+        CharacterEntity entity = new CharacterEntity();
+        entity.setName(dto.getName());
+        entity.setImage(dto.getImage());
+        entity.setAge(dto.getAge());
+        entity.setWeight(dto.getWeight());
+        entity.setStory(dto.getStory());
+        for (MovieDTO movieDTO : dto.getMovies()) {
+            MovieEntity movie = movieMapper.movieDTO2Entity(movieDTO);
+            entity.getMovies().add(movie);
+        }
+        return entity;
     }
 
-    public CharacterDTO characterEntity2DTO (CharacterEntity entity) {
-        CharacterDTO characterDTO = new CharacterDTO();
-        characterDTO.setId(entity.getId());
-        characterDTO.setName(entity.getName());
-        characterDTO.setImage(entity.getImage());
-        characterDTO.setAge(entity.getAge());
-        characterDTO.setWeight(entity.getWeight());
-        characterDTO.setStory(entity.getStory());
-        characterDTO.setMovies(entity.getMovies());
-        return characterDTO;
+    public CharacterDTO characterEntity2DTO (CharacterEntity entity, boolean loadMovies) {
+        CharacterDTO dto = new CharacterDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setImage(entity.getImage());
+        dto.setAge(entity.getAge());
+        dto.setWeight(entity.getWeight());
+        dto.setStory(entity.getStory());
+        if (loadMovies) {
+            dto.setMovies(movieMapper.movieEntityCollection2DTOSet(entity.getMovies(), false));
+        }
+        return dto;
     }
 
-    public List<CharacterDTO> characterEntityList2DTOList (List<CharacterEntity> entities) {
+    public Set<CharacterDTO> characterEntityCollection2DTOSet(Collection<CharacterEntity> entities, boolean loadMovies) {
+        Set<CharacterDTO> DTOs = new HashSet<>();
+        for (CharacterEntity entity : entities) {
+            DTOs.add(characterEntity2DTO(entity, loadMovies));
+        }
+        return DTOs;
+    }
+
+    public List<CharacterDTO> characterEntityCollection2DTOList (Collection<CharacterEntity> entities, boolean loadMovies) {
         List<CharacterDTO> DTOs = new ArrayList<>();
         for (CharacterEntity entity : entities) {
-            DTOs.add(characterEntity2DTO(entity));
+            DTOs.add(characterEntity2DTO(entity, loadMovies));
         }
         return DTOs;
     }

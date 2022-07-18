@@ -7,12 +7,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+
 @RestController
 @RequestMapping("characters")
 public class CharacterController {
 
     @Autowired
     private CharacterService service;
+
+    @GetMapping
+    public ResponseEntity<List<CharacterDTO>> getDetailsByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) Double weight,
+            @RequestParam(required = false) Set<Long> movies
+    ) {
+        List<CharacterDTO> characters = service.getByFilters(name, age, weight, movies);
+        return ResponseEntity.ok(characters);
+    }
 
     @PostMapping
     public ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {

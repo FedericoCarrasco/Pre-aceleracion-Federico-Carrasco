@@ -1,5 +1,6 @@
 package com.alkemy.disney.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "genres")
 @Getter
 @Setter
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class GenreEntity {
 
     @Id

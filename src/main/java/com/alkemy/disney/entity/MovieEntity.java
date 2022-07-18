@@ -1,5 +1,6 @@
 package com.alkemy.disney.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Setter
 @SQLDelete(sql = "UPDATE movies SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class MovieEntity {
 
     @Id
@@ -35,7 +37,7 @@ public class MovieEntity {
 
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id", insertable = false, updatable = false)
     private GenreEntity genre;
 
