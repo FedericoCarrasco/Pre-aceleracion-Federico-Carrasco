@@ -3,6 +3,7 @@ package com.alkemy.disney.service.impl;
 import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.dto.MovieFiltersDTO;
 import com.alkemy.disney.entity.MovieEntity;
+import com.alkemy.disney.exeption.ParamNotFound;
 import com.alkemy.disney.mapper.MovieMapper;
 import com.alkemy.disney.repository.MovieRepository;
 import com.alkemy.disney.repository.specification.MovieSpecifications;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -23,6 +25,14 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
+    public MovieDTO getById(Long id) {
+        Optional<MovieEntity> entity = movieRepository.findById(id);
+        if (entity.isEmpty()) {
+            throw new ParamNotFound("Movie with Id: " + id + " not found.");
+        }
+        return movieMapper.movieEntity2DTO(entity.get(), true);
+    }
+
     public List<MovieDTO> getByFilters(String name, Long genre, String order) {
         MovieFiltersDTO filtersDTO = new MovieFiltersDTO(name, genre, order);
         List<MovieEntity> entities = movieRepository.findAll(movieSpecifications.getByFilters(filtersDTO));
@@ -33,6 +43,16 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity entity = movieMapper.movieDTO2Entity(dto);
         MovieEntity entitySaved = movieRepository.save(entity);
         return movieMapper.movieEntity2DTO(entitySaved, true);
+    }
+
+    public MovieDTO update(MovieDTO newMovie, Long id) {
+        Optional<MovieEntity> oldMovie = movieRepository.findById(id);
+        if(oldMovie.isEmpty()){
+            throw new ParamNotFound("Movie with id: " + id + " not found");
+        }
+        movieMapper.movieUpdate(oldMovie.get(), newMovie);
+        MovieEntity entitySaved = movieRepository.save(oldMovie.get());
+        return movieMapper.movieEntity2DTO(entitySaved, false);
     }
 
     public void delete(long id) {

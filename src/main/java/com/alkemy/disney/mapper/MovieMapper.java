@@ -62,4 +62,13 @@ public class MovieMapper {
         return DTOs;
     }
 
+    public void movieUpdate(MovieEntity oldMovie, MovieDTO newMovie) {
+        oldMovie.setTitle(newMovie.getTitle());
+        oldMovie.setImage(newMovie.getImage());
+        oldMovie.setReleaseDate(newMovie.getReleaseDate());
+        oldMovie.setRating(newMovie.getRating());
+        oldMovie.setGenreId(newMovie.getGenreId());
+        oldMovie.setGenre(newMovie.getGenre());
+    }
+
 }

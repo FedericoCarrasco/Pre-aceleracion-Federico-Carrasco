@@ -31,7 +31,7 @@ public class CharacterServiceImpl implements CharacterService {
     public CharacterDTO getById(Long id) {
         Optional<CharacterEntity> entity = characterRepository.findById(id);
         if (entity.isEmpty()) {
-            throw new ParamNotFound("Character with Id " + id + " not found.");
+            throw new ParamNotFound("Character with Id: " + id + " not found.");
         }
         return characterMapper.characterEntity2DTO(entity.get(), true);
     }
@@ -54,7 +54,7 @@ public class CharacterServiceImpl implements CharacterService {
             throw new ParamNotFound("Character with Id " + id + " not found.");
         }
         characterMapper.characterUpdate(oldCharacter.get(), newCharacter);
-        CharacterEntity entitySaved = characterRepository.save(oldCharacter.get());
+            CharacterEntity entitySaved = characterRepository.save(oldCharacter.get());
         return characterMapper.characterEntity2DTO(entitySaved, false);
     }
 
