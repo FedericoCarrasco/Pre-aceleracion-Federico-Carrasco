@@ -55,7 +55,12 @@ public class MovieServiceImpl implements MovieService {
         if(oldMovie.isEmpty()){
             throw new ParamNotFound("Movie with id: " + id + " not found");
         }
-        movieMapper.movieUpdate(oldMovie.get(), newMovie);
+        oldMovie.get().setTitle(newMovie.getTitle());
+        oldMovie.get().setImage(newMovie.getImage());
+        oldMovie.get().setReleaseDate(newMovie.getReleaseDate());
+        oldMovie.get().setRating(newMovie.getRating());
+        oldMovie.get().setGenreId(newMovie.getGenreId());
+        oldMovie.get().setGenre(newMovie.getGenre());
         MovieEntity entitySaved = movieRepository.save(oldMovie.get());
         return movieMapper.movieEntity2DTO(entitySaved, false);
     }
