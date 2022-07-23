@@ -31,11 +31,8 @@ public class MovieServiceImpl implements MovieService {
     private CharacterRepository characterRepository;
 
     public MovieDTO getById(Long id) {
-        Optional<MovieEntity> entity = movieRepository.findById(id);
-        if (entity.isEmpty()) {
-            throw new ParamNotFound("Movie with Id: " + id + " not found.");
-        }
-        return movieMapper.movieEntity2DTO(entity.get(), true);
+        MovieEntity entity = getMovieEntityById(id);
+        return movieMapper.movieEntity2DTO(entity, true);
     }
 
     public List<MovieDTO> getByFilters(String name, Long genre, String order) {
@@ -51,17 +48,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public MovieDTO update(MovieDTO newMovie, Long id) {
-        Optional<MovieEntity> oldMovie = movieRepository.findById(id);
-        if(oldMovie.isEmpty()){
-            throw new ParamNotFound("Movie with id: " + id + " not found");
-        }
-        oldMovie.get().setTitle(newMovie.getTitle());
-        oldMovie.get().setImage(newMovie.getImage());
-        oldMovie.get().setReleaseDate(newMovie.getReleaseDate());
-        oldMovie.get().setRating(newMovie.getRating());
-        oldMovie.get().setGenreId(newMovie.getGenreId());
-        oldMovie.get().setGenre(newMovie.getGenre());
-        MovieEntity entitySaved = movieRepository.save(oldMovie.get());
+        MovieEntity oldMovie = getMovieEntityById(id);
+        oldMovie.setTitle(newMovie.getTitle());
+        oldMovie.setImage(newMovie.getImage());
+        oldMovie.setReleaseDate(newMovie.getReleaseDate());
+        oldMovie.setRating(newMovie.getRating());
+        oldMovie.setGenreId(newMovie.getGenreId());
+        oldMovie.setGenre(newMovie.getGenre());
+        MovieEntity entitySaved = movieRepository.save(oldMovie);
         return movieMapper.movieEntity2DTO(entitySaved, false);
     }
 
@@ -70,26 +64,30 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public MovieDTO addCharacter(Long idMovie, Long idCharacter) {
-        Optional<MovieEntity> movie = movieRepository.findById(idMovie);
-        if(movie.isEmpty()){
-            throw new ParamNotFound("Movie with id: " + idMovie + " not found");
-        }
-        Optional<CharacterEntity> character = characterRepository.findById(idCharacter);
-        if(character.isEmpty()){
-            throw new ParamNotFound("Character with id: " + idCharacter + " not found");
-        }
-        return movieMapper.addCharacter(movie.get(), character.get());
+        MovieEntity movie = getMovieEntityById(idMovie);
+        CharacterEntity character = getCharacterEntityById(idCharacter);
+        return movieMapper.addCharacter(movie, character);
     }
 
     public MovieDTO removeCharacter(Long idMovie, Long idCharacter) {
-        Optional<MovieEntity> movie = movieRepository.findById(idMovie);
+        MovieEntity movie = getMovieEntityById(idMovie);
+        CharacterEntity character = getCharacterEntityById(idCharacter);
+        return movieMapper.removeCharacter(movie, character);
+    }
+
+    private MovieEntity getMovieEntityById(Long id) {
+        Optional<MovieEntity> movie = movieRepository.findById(id);
         if(movie.isEmpty()){
-            throw new ParamNotFound("Movie with id: " + idMovie + " not found");
+            throw new ParamNotFound("Movie with id: " + id + " not found");
         }
-        Optional<CharacterEntity> character = characterRepository.findById(idCharacter);
+        return movie.get();
+    }
+
+    private CharacterEntity getCharacterEntityById(Long id) {
+        Optional<CharacterEntity> character = characterRepository.findById(id);
         if(character.isEmpty()){
-            throw new ParamNotFound("Character with id: " + idCharacter + " not found");
+            throw new ParamNotFound("Character with id: " + id + " not found");
         }
-        return movieMapper.removeCharacter(movie.get(), character.get());
+        return character.get();
     }
 }
