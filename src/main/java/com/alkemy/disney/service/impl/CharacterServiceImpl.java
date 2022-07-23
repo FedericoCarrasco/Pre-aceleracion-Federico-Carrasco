@@ -29,11 +29,8 @@ public class CharacterServiceImpl implements CharacterService {
     private CharacterRepository characterRepository;
 
     public CharacterDTO getById(Long id) {
-        Optional<CharacterEntity> entity = characterRepository.findById(id);
-        if (entity.isEmpty()) {
-            throw new ParamNotFound("Character with Id: " + id + " not found.");
-        }
-        return characterMapper.characterEntity2DTO(entity.get(), true);
+        CharacterEntity entity = getCharacterEntityById(id);
+        return characterMapper.characterEntity2DTO(entity, true);
     }
 
     public List<CharacterDTO> getByFilters(String name, Integer age, Double weight, Set<Long> movies) {
@@ -49,16 +46,13 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     public CharacterDTO update(CharacterDTO newCharacter, Long id) {
-        Optional<CharacterEntity> oldCharacter = characterRepository.findById(id);
-        if (oldCharacter.isEmpty()) {
-            throw new ParamNotFound("Character with Id: " + id + " not found.");
-        }
-        oldCharacter.get().setName(newCharacter.getName());
-        oldCharacter.get().setImage(newCharacter.getImage());
-        oldCharacter.get().setAge(newCharacter.getAge());
-        oldCharacter.get().setWeight(newCharacter.getWeight());
-        oldCharacter.get().setStory(newCharacter.getStory());
-        CharacterEntity entitySaved = characterRepository.save(oldCharacter.get());
+        CharacterEntity oldCharacter = getCharacterEntityById(id);
+        oldCharacter.setName(newCharacter.getName());
+        oldCharacter.setImage(newCharacter.getImage());
+        oldCharacter.setAge(newCharacter.getAge());
+        oldCharacter.setWeight(newCharacter.getWeight());
+        oldCharacter.setStory(newCharacter.getStory());
+        CharacterEntity entitySaved = characterRepository.save(oldCharacter);
         return characterMapper.characterEntity2DTO(entitySaved, false);
     }
 
@@ -66,4 +60,11 @@ public class CharacterServiceImpl implements CharacterService {
         characterRepository.deleteById(id);
     }
 
+    private CharacterEntity getCharacterEntityById(Long id) {
+        Optional<CharacterEntity> character = characterRepository.findById(id);
+        if (character.isEmpty()) {
+            throw new ParamNotFound("Character with Id: " + id + " not found.");
+        }
+        return character.get();
+    }
 }
