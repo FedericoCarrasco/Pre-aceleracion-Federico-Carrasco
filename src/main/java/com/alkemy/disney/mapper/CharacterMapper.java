@@ -59,11 +59,4 @@ public class CharacterMapper {
         return DTOs;
     }
 
-    public void characterUpdate(CharacterEntity oldCharacter, CharacterDTO newCharacter){
-        oldCharacter.setName(newCharacter.getName());
-        oldCharacter.setImage(newCharacter.getImage());
-        oldCharacter.setAge(newCharacter.getAge());
-        oldCharacter.setWeight(newCharacter.getWeight());
-        oldCharacter.setStory(newCharacter.getStory());
-    }
 }

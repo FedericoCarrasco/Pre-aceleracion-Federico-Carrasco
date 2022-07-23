@@ -51,10 +51,14 @@ public class CharacterServiceImpl implements CharacterService {
     public CharacterDTO update(CharacterDTO newCharacter, Long id) {
         Optional<CharacterEntity> oldCharacter = characterRepository.findById(id);
         if (oldCharacter.isEmpty()) {
-            throw new ParamNotFound("Character with Id " + id + " not found.");
+            throw new ParamNotFound("Character with Id: " + id + " not found.");
         }
-        characterMapper.characterUpdate(oldCharacter.get(), newCharacter);
-            CharacterEntity entitySaved = characterRepository.save(oldCharacter.get());
+        oldCharacter.get().setName(newCharacter.getName());
+        oldCharacter.get().setImage(newCharacter.getImage());
+        oldCharacter.get().setAge(newCharacter.getAge());
+        oldCharacter.get().setWeight(newCharacter.getWeight());
+        oldCharacter.get().setStory(newCharacter.getStory());
+        CharacterEntity entitySaved = characterRepository.save(oldCharacter.get());
         return characterMapper.characterEntity2DTO(entitySaved, false);
     }
 
