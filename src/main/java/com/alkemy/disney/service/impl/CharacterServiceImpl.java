@@ -57,7 +57,8 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     public void delete(long id) {
-        characterRepository.deleteById(id);
+        CharacterEntity character = getCharacterEntityById(id);
+        characterRepository.delete(character);
     }
 
     private CharacterEntity getCharacterEntityById(Long id) {
