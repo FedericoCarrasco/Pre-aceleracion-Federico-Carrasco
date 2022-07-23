@@ -67,13 +67,15 @@ public class MovieServiceImpl implements MovieService {
     public MovieDTO addCharacter(Long idMovie, Long idCharacter) {
         MovieEntity movie = getMovieEntityById(idMovie);
         CharacterEntity character = getCharacterEntityById(idCharacter);
-        return movieMapper.addCharacter(movie, character);
+        movie.addCharacter(character);
+        return movieMapper.movieEntity2DTO(movie, true);
     }
 
     public MovieDTO removeCharacter(Long idMovie, Long idCharacter) {
         MovieEntity movie = getMovieEntityById(idMovie);
         CharacterEntity character = getCharacterEntityById(idCharacter);
-        return movieMapper.removeCharacter(movie, character);
+        movie.removeCharacter(character);
+        return movieMapper.movieEntity2DTO(movie, true);
     }
 
     private MovieEntity getMovieEntityById(Long id) {

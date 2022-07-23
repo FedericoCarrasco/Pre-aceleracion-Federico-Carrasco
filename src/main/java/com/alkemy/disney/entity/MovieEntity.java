@@ -56,6 +56,12 @@ public class MovieEntity {
     )
     private Set<CharacterEntity> characters = new HashSet<>();
 
+    public void addCharacter(CharacterEntity character) {
+        this.getCharacters().add(character);
+    }
 
+    public  void removeCharacter(CharacterEntity character) {
+        this.getCharacters().remove(character);
+    }
 
 }

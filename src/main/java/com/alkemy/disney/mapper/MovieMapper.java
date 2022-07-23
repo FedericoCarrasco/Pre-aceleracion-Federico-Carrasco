@@ -62,13 +62,4 @@ public class MovieMapper {
         return DTOs;
     }
 
-    public MovieDTO addCharacter(MovieEntity movie, CharacterEntity character) {
-        movie.getCharacters().add(character);
-        return movieEntity2DTO(movie, true);
-    }
-
-    public MovieDTO removeCharacter(MovieEntity movie, CharacterEntity character) {
-        movie.getCharacters().remove(character);
-        return movieEntity2DTO(movie, true);
-    }
 }
