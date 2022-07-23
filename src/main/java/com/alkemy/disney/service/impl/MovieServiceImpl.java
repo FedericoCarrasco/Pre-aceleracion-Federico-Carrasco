@@ -60,7 +60,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public void delete(long id) {
-        movieRepository.deleteById(id);
+        MovieEntity movie = getMovieEntityById(id);
+        movieRepository.delete(movie);
     }
 
     public MovieDTO addCharacter(Long idMovie, Long idCharacter) {
