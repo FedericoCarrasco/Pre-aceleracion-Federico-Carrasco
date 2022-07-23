@@ -46,14 +46,13 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     public CharacterDTO update(CharacterDTO newCharacter, Long id) {
-        CharacterEntity oldCharacter = getCharacterEntityById(id);
-        oldCharacter.setName(newCharacter.getName());
-        oldCharacter.setImage(newCharacter.getImage());
-        oldCharacter.setAge(newCharacter.getAge());
-        oldCharacter.setWeight(newCharacter.getWeight());
-        oldCharacter.setStory(newCharacter.getStory());
-        CharacterEntity entitySaved = characterRepository.save(oldCharacter);
-        return characterMapper.characterEntity2DTO(entitySaved, false);
+        CharacterEntity character = getCharacterEntityById(id);
+        character.setName(newCharacter.getName());
+        character.setImage(newCharacter.getImage());
+        character.setAge(newCharacter.getAge());
+        character.setWeight(newCharacter.getWeight());
+        character.setStory(newCharacter.getStory());
+        return characterMapper.characterEntity2DTO(character, false);
     }
 
     public void delete(long id) {

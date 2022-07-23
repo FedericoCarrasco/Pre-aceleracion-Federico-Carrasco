@@ -48,15 +48,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public MovieDTO update(MovieDTO newMovie, Long id) {
-        MovieEntity oldMovie = getMovieEntityById(id);
-        oldMovie.setTitle(newMovie.getTitle());
-        oldMovie.setImage(newMovie.getImage());
-        oldMovie.setReleaseDate(newMovie.getReleaseDate());
-        oldMovie.setRating(newMovie.getRating());
-        oldMovie.setGenreId(newMovie.getGenreId());
-        oldMovie.setGenre(newMovie.getGenre());
-        MovieEntity entitySaved = movieRepository.save(oldMovie);
-        return movieMapper.movieEntity2DTO(entitySaved, false);
+        MovieEntity movie = getMovieEntityById(id);
+        movie.setTitle(newMovie.getTitle());
+        movie.setImage(newMovie.getImage());
+        movie.setReleaseDate(newMovie.getReleaseDate());
+        movie.setRating(newMovie.getRating());
+        movie.setGenreId(newMovie.getGenreId());
+        movie.setGenre(newMovie.getGenre());
+        return movieMapper.movieEntity2DTO(movie, false);
     }
 
     public void delete(long id) {
