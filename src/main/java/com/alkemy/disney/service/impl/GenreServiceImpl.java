@@ -36,7 +36,7 @@ public class GenreServiceImpl implements GenreService {
         return genreMapper.genreEntityList2DTOList(entities);
     }
 
-    private GenreEntity getGenreEntityById(Long id) {
+    public GenreEntity getGenreEntityById(Long id) {
         Optional<GenreEntity> genre = genreRepository.findById(id);
         if (genre.isEmpty()) {
             throw new ParamNotFound("Genre with id: " + id + " not found");

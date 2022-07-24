@@ -10,6 +10,7 @@ import com.alkemy.disney.mapper.MovieMapper;
 import com.alkemy.disney.repository.CharacterRepository;
 import com.alkemy.disney.repository.MovieRepository;
 import com.alkemy.disney.repository.specification.MovieSpecifications;
+import com.alkemy.disney.service.GenreService;
 import com.alkemy.disney.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private CharacterRepository characterRepository;
 
+    @Autowired
+    private GenreService genreService;
+
     public MovieDTO getById(Long id) {
         MovieEntity entity = getMovieEntityById(id);
         return movieMapper.movieEntity2DTO(entity, true);
@@ -45,6 +49,7 @@ public class MovieServiceImpl implements MovieService {
     public MovieDTO save(MovieDTO dto) {
         MovieEntity entity = movieMapper.movieDTO2Entity(dto);
         MovieEntity entitySaved = movieRepository.save(entity);
+        entitySaved.setGenre(genreService.getGenreEntityById(entitySaved.getGenreId()));
         return movieMapper.movieEntity2DTO(entitySaved, true);
     }
 
@@ -55,7 +60,7 @@ public class MovieServiceImpl implements MovieService {
         movie.setReleaseDate(newMovie.getReleaseDate());
         movie.setRating(newMovie.getRating());
         movie.setGenreId(newMovie.getGenreId());
-        movie.setGenre(newMovie.getGenre());
+        movie.setGenre(genreService.getGenreEntityById(movie.getGenreId()));
         return movieMapper.movieEntity2DTO(movie, false);
     }
 
