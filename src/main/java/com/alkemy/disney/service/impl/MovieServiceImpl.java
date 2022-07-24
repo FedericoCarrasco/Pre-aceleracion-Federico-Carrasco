@@ -61,6 +61,7 @@ public class MovieServiceImpl implements MovieService {
         movie.setRating(newMovie.getRating());
         movie.setGenreId(newMovie.getGenreId());
         movie.setGenre(genreService.getGenreEntityById(movie.getGenreId()));
+        movieRepository.save(movie);
         return movieMapper.movieEntity2DTO(movie, false);
     }
 

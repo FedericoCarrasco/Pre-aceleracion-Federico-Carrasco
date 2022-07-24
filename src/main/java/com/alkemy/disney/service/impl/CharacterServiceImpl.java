@@ -53,6 +53,7 @@ public class CharacterServiceImpl implements CharacterService {
         character.setAge(newCharacter.getAge());
         character.setWeight(newCharacter.getWeight());
         character.setStory(newCharacter.getStory());
+        characterRepository.save(character);
         return characterMapper.characterEntity2DTO(character, false);
     }
 
