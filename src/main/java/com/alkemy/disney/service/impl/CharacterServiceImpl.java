@@ -1,5 +1,6 @@
 package com.alkemy.disney.service.impl;
 
+import com.alkemy.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.dto.CharacterDTO;
 import com.alkemy.disney.dto.CharacterFiltersDTO;
 import com.alkemy.disney.entity.CharacterEntity;
@@ -33,10 +34,10 @@ public class CharacterServiceImpl implements CharacterService {
         return characterMapper.characterEntity2DTO(entity, true);
     }
 
-    public List<CharacterDTO> getByFilters(String name, Integer age, Double weight, Set<Long> movies) {
+    public List<CharacterBasicDTO> getByFilters(String name, Integer age, Double weight, Set<Long> movies) {
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, weight, movies);
         List<CharacterEntity> entities = characterRepository.findAll(characterSpecifications.getByFilters(filtersDTO));
-        return characterMapper.characterEntityCollection2DTOList(entities, true);
+        return characterMapper.characterEntityCollection2BasicDTOList(entities);
     }
 
     public CharacterDTO save(CharacterDTO dto) {

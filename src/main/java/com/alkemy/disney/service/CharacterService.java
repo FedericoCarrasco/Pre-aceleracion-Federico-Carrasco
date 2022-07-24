@@ -1,5 +1,6 @@
 package com.alkemy.disney.service;
 
+import com.alkemy.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.dto.CharacterDTO;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface CharacterService {
 
     CharacterDTO getById(Long id);
 
-    List<CharacterDTO> getByFilters(String name, Integer age, Double weight, Set<Long> movies);
+    List<CharacterBasicDTO> getByFilters(String name, Integer age, Double weight, Set<Long> movies);
 
     void delete(long id);
 
