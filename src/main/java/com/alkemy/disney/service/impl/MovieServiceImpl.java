@@ -1,5 +1,6 @@
 package com.alkemy.disney.service.impl;
 
+import com.alkemy.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.dto.MovieFiltersDTO;
 import com.alkemy.disney.entity.CharacterEntity;
@@ -35,10 +36,10 @@ public class MovieServiceImpl implements MovieService {
         return movieMapper.movieEntity2DTO(entity, true);
     }
 
-    public List<MovieDTO> getByFilters(String name, Long genre, String order) {
+    public List<MovieBasicDTO> getByFilters(String name, Long genre, String order) {
         MovieFiltersDTO filtersDTO = new MovieFiltersDTO(name, genre, order);
         List<MovieEntity> entities = movieRepository.findAll(movieSpecifications.getByFilters(filtersDTO));
-        return movieMapper.movieEntityCollection2DTOList(entities, true);
+        return movieMapper.movieEntityCollection2BasicDTOList(entities);
     }
 
     public MovieDTO save(MovieDTO dto) {
