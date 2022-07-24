@@ -21,13 +21,13 @@ public class UserAuthController {
     @Autowired
     private UserDetailsCustomService service;
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO user) throws Exception {
         service.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> signIn(@Valid @RequestBody AuthenticationRequest request) throws Exception {
         AuthenticationResponse response = service.authenticate(request);
         return ResponseEntity.ok(response);
