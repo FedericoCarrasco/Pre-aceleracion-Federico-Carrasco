@@ -16,7 +16,6 @@ import java.util.Set;
 @Setter
 @SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-@JsonIgnoreProperties("hibernateLazyInitializer")
 public class CharacterEntity {
 
     @Id
