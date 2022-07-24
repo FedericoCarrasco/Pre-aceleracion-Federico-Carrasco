@@ -11,14 +11,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class GenreServiceImpl implements GenreService {
 
     @Autowired
-    private GenreMapper genreMapper;
-    @Autowired
     private GenreRepository genreRepository;
+
+    @Autowired
+    private GenreMapper genreMapper;
 
     public GenreDTO save(GenreDTO dto) {
         GenreEntity entity = genreMapper.genreDTO2Entity(dto);
@@ -33,7 +35,7 @@ public class GenreServiceImpl implements GenreService {
 
     public List<GenreDTO> getAllGenres(){
         List<GenreEntity> entities = genreRepository.findAll();
-        return genreMapper.genreEntityList2DTOList(entities);
+        return genreMapper.genreEntityCollection2DTOList(entities);
     }
 
     public GenreEntity getGenreEntityById(Long id) {

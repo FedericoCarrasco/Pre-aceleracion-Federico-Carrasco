@@ -17,10 +17,10 @@ public class GenreController {
     @Autowired
     private GenreService service;
 
-    @GetMapping
-    public ResponseEntity<List<GenreDTO>> getAll() {
-        List<GenreDTO> genres = service.getAllGenres();
-        return ResponseEntity.ok().body(genres);
+    @PostMapping
+    public ResponseEntity<GenreDTO> save(@Valid @RequestBody GenreDTO genre) {
+        GenreDTO savedGenre = service.save(genre);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedGenre);
     }
 
     @GetMapping("/{id}")
@@ -29,9 +29,10 @@ public class GenreController {
         return ResponseEntity.ok().body(genre);
     }
 
-    @PostMapping
-    public ResponseEntity<GenreDTO> save(@Valid @RequestBody GenreDTO genre) {
-        GenreDTO savedGenre = service.save(genre);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedGenre);
+    @GetMapping
+    public ResponseEntity<List<GenreDTO>> getAll() {
+        List<GenreDTO> genres = service.getAllGenres();
+        return ResponseEntity.ok().body(genres);
     }
+
 }

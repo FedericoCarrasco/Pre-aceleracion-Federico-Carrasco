@@ -22,11 +22,6 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
 
     @Autowired
-    private MovieSpecifications movieSpecifications;
-    @Autowired
-    private MovieMapper movieMapper;
-
-    @Autowired
     private MovieRepository movieRepository;
 
     @Autowired
@@ -34,6 +29,19 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private GenreService genreService;
+
+    @Autowired
+    private MovieMapper movieMapper;
+
+    @Autowired
+    private MovieSpecifications movieSpecifications;
+
+    public MovieDTO save(MovieDTO dto) {
+        MovieEntity entity = movieMapper.movieDTO2Entity(dto);
+        MovieEntity entitySaved = movieRepository.save(entity);
+        entitySaved.setGenre(genreService.getGenreEntityById(entitySaved.getGenreId()));
+        return movieMapper.movieEntity2DTO(entitySaved, true);
+    }
 
     public MovieDTO getById(Long id) {
         MovieEntity entity = getMovieEntityById(id);
@@ -44,13 +52,6 @@ public class MovieServiceImpl implements MovieService {
         MovieFiltersDTO filtersDTO = new MovieFiltersDTO(name, genre, order);
         List<MovieEntity> entities = movieRepository.findAll(movieSpecifications.getByFilters(filtersDTO));
         return movieMapper.movieEntityCollection2BasicDTOList(entities);
-    }
-
-    public MovieDTO save(MovieDTO dto) {
-        MovieEntity entity = movieMapper.movieDTO2Entity(dto);
-        MovieEntity entitySaved = movieRepository.save(entity);
-        entitySaved.setGenre(genreService.getGenreEntityById(entitySaved.getGenreId()));
-        return movieMapper.movieEntity2DTO(entitySaved, true);
     }
 
     public MovieDTO update(MovieDTO newMovie, Long id) {
@@ -99,4 +100,5 @@ public class MovieServiceImpl implements MovieService {
         }
         return character.get();
     }
+
 }

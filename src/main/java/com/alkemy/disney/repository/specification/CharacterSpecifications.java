@@ -13,7 +13,6 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -24,7 +23,7 @@ public class CharacterSpecifications {
 
             List<Predicate> predicates = new ArrayList<>();
 
-            if (StringUtils.hasLength(filtersDTO.getName())){
+            if (StringUtils.hasLength(filtersDTO.getName())) {
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get("name")),
@@ -57,4 +56,5 @@ public class CharacterSpecifications {
 
         });
     }
+
 }

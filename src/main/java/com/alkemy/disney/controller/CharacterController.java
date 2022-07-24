@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -19,6 +18,12 @@ public class CharacterController {
 
     @Autowired
     private CharacterService service;
+
+    @PostMapping
+    public ResponseEntity<CharacterDTO> save(@Valid @RequestBody CharacterDTO character) {
+        CharacterDTO savedCharacter = service.save(character);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCharacter);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CharacterDTO> getById(@PathVariable Long id) {
@@ -37,12 +42,6 @@ public class CharacterController {
         return ResponseEntity.ok(characters);
     }
 
-    @PostMapping
-    public ResponseEntity<CharacterDTO> save(@Valid @RequestBody CharacterDTO character) {
-        CharacterDTO savedCharacter = service.save(character);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCharacter);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<CharacterDTO> update(@Valid @RequestBody CharacterDTO newCharacter, @PathVariable Long id) {
         CharacterDTO savedCharacter = service.update(newCharacter, id);
@@ -54,4 +53,5 @@ public class CharacterController {
         service.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }

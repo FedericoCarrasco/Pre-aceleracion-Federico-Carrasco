@@ -14,11 +14,12 @@ import java.util.Set;
 @Setter
 public class MovieDTO {
     private long id;
+    private String image;
     @NotNull
     @Size(min = 1)
     private String title;
-    private String image;
     private Date releaseDate;
+    @Size(min = 1, max = 5)
     private float rating;
     private GenreEntity genre;
     private long genreId;

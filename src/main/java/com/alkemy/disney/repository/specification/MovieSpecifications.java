@@ -18,7 +18,7 @@ public class MovieSpecifications {
 
             List<Predicate> predicates = new ArrayList<>();
 
-            if (StringUtils.hasLength(filtersDTO.getName())){
+            if (StringUtils.hasLength(filtersDTO.getName())) {
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get("title")),
@@ -39,6 +39,7 @@ public class MovieSpecifications {
             );
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+
         });
     }
 

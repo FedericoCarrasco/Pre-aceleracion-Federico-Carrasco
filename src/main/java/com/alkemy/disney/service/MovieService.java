@@ -9,11 +9,11 @@ public interface MovieService {
 
     MovieDTO save(MovieDTO movie);
 
-    MovieDTO update(MovieDTO newMovie, Long id);
-
     MovieDTO getById(Long id);
 
     List<MovieBasicDTO> getByFilters(String name, Long genre, String order);
+
+    MovieDTO update(MovieDTO newMovie, Long id);
 
     void delete(long id);
 

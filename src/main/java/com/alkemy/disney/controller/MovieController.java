@@ -18,6 +18,12 @@ public class MovieController {
     @Autowired
     private MovieService service;
 
+    @PostMapping
+    ResponseEntity<MovieDTO> save(@Valid @RequestBody MovieDTO movie) {
+        MovieDTO savedMovie = service.save(movie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getById(@PathVariable Long id) {
         MovieDTO movie = service.getById(id);
@@ -32,12 +38,6 @@ public class MovieController {
     ) {
         List<MovieBasicDTO> movies = service.getByFilters(name, genre, order);
         return ResponseEntity.ok(movies);
-    }
-
-    @PostMapping
-    ResponseEntity<MovieDTO> save(@Valid @RequestBody MovieDTO movie) {
-        MovieDTO savedMovie = service.save(movie);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
 
     @PutMapping("/{id}")
@@ -63,4 +63,5 @@ public class MovieController {
         MovieDTO movie = service.removeCharacter(idMovie, idCharacter);
         return ResponseEntity.ok(movie);
     }
+
 }
