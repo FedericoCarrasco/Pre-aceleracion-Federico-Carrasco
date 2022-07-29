@@ -31,7 +31,7 @@ public class MovieEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
 
-    private float rating;
+    private int rating;
 
     private boolean deleted = Boolean.FALSE;
 

@@ -48,6 +48,10 @@ public class UserDetailsCustomService implements UserDetailsService {
     }
 
     public boolean save(UserDTO userDTO) {
+        UserEntity user = userRepository.findByUsername(userDTO.getUsername());
+        if(user != null) {
+            throw new BadCredentialsException("Username is already in use");
+        }
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userDTO.getUsername());
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));

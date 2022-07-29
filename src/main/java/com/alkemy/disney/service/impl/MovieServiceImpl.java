@@ -75,6 +75,7 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity movie = getMovieEntityById(idMovie);
         CharacterEntity character = getCharacterEntityById(idCharacter);
         movie.addCharacter(character);
+        movieRepository.save(movie);
         return movieMapper.movieEntity2DTO(movie, true);
     }
 
@@ -82,6 +83,7 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity movie = getMovieEntityById(idMovie);
         CharacterEntity character = getCharacterEntityById(idCharacter);
         movie.removeCharacter(character);
+        movieRepository.save(movie);
         return movieMapper.movieEntity2DTO(movie, true);
     }
 
